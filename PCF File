@@ -1,0 +1,24 @@
+Step 2: Creating the PCF File
+The PCF file can be accessed here. It defines the pin assignments for the FPGA board to map the inputs and outputs defined in the Verilog code to specific physical pins on the FPGA.
+
+Pin Assignments in the PCF File
+led_red → Pin 39
+
+led_blue → Pin 40
+
+led_green → Pin 41
+
+hw_clk → Pin 20
+
+testwire → Pin 17
+
+Cross-referencing with the VSDSquadron FPGA Mini Board Datasheet
+Using the VSDSquadron FPGA Mini board datasheet, you can verify that these pin assignments match the physical pins available on the FPGA board.
+
+Pin Mapping Explanation
+led_red, led_blue, and led_green: These pins correspond to the three channels of the RGB LED on the FPGA board. Each pin is connected to one color channel of the LED.
+
+hw_clk: This pin connects to the external clock input, which provides the hardware clock for the FPGA.
+
+testwire: This pin can be used as a test signal output for debugging purposes, which might be useful for testing the functionality of the FPGA design.
+
