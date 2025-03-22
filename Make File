@@ -1,0 +1,18 @@
+Step 3: Integrating with the VSDSquadron FPGA Mini Board
+To integrate the design with the physical FPGA board, follow these steps:
+
+1. Understanding the FPGA Board
+Review the VSDSquadron FPGA Mini board datasheet to understand its features, including the pinout and how to connect the board to your computer. The datasheet should also include the method for connecting the board via USB-C and FTDI for programming.
+
+2. Programming the FPGA Board
+Once the connections are verified, use the following steps to compile and upload the Verilog code to the FPGA:
+
+Run make clean: This command clears any previous builds that may exist.
+
+Run make build: This command compiles the Verilog code, synthesizes the design, and prepares it for uploading.
+
+Run sudo make flash: This command uploads the compiled design to the FPGA board.
+
+3. Observe Behavior
+After programming the FPGA, observe the RGB LED on the board. The expected behavior is that the LED should change colors or patterns based on the logic defined in the Verilog code. If the LED behaves as expected, the programming was successful.
+
