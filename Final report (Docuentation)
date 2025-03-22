@@ -1,1 +1,32 @@
+Step 4: Final Documentation
+Summary of Verilog Code Functionality
+The Verilog code is responsible for controlling the colors of an RGB LED. It uses an internal oscillator to generate clock pulses, which drive the frequency counter and, in turn, control the RGB LED. The logic allows for different color outputs, which are mapped to the FPGA's output pins.
+
+Pin Mapping Details from the PCF File
+led_red: Pin 39
+
+led_blue: Pin 40
+
+led_green: Pin 41
+
+hw_clk: Pin 20
+
+testwire: Pin 17
+
+These pins are mapped from the Verilog code to the physical FPGA board to control the RGB LED and other signals.
+
+Integration Steps
+Verify the Pin Mappings from the PCF file with the FPGA datasheet.
+
+Connect the FPGA Board to the computer using USB-C and FTDI.
+
+Use the Makefile to build and program the FPGA.
+
+Observe the RGB LED Behavior to verify the design.
+
+Challenges Faced and Solutions Implemented
+One challenge could be verifying that the internal oscillator and frequency counter logic work correctly to drive the LED.
+
+The solution is to check the LED's behavior and ensure it follows the expected patterns of red, blue, and green.
+
 
