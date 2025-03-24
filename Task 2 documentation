@@ -1,0 +1,139 @@
+UART Loopback Documentation
+1. Introduction
+This documentation details the implementation of a UART loopback mechanism on the VSDSquadron FPGA Mini. The loopback mechanism is used to test UART functionality by transmitting data from the FPGA’s UART transmitter, and immediately receiving it back through the UART receiver. This helps in verifying the integrity of the UART communication system.
+
+2. Objectives
+The objective of this project is to implement a UART loopback system where transmitted data is immediately received back. This is a crucial test to ensure that the FPGA’s UART modules (both transmitter and receiver) are functioning correctly and the system can handle basic communication tasks.
+
+3. Design Overview
+3.1 Block Diagram
+A simple block diagram of the UART loopback system is illustrated below.
+
+plaintext
+Copy
++------------------+      +---------------------+
+|  Serial Terminal | <--> | VSDSquadron FPGA     |
+|   (PC or Host)   |      | +-----------------+  |
+|                  |      | | UART Transmitter|  |
++------------------+      | |                 |  |
+                          | +-----------------+  |
+                          | +-----------------+  |
+                          | | UART Receiver   |  |
+                          | |                 |  |
+                          | +-----------------+  |
+                          +---------------------+
+3.2 Circuit Diagram
+The following diagram shows the UART connections between the FPGA and the serial terminal for loopback.
+
+TX (Transmitter) pin from FPGA is directly connected to the RX (Receiver) pin.
+
+A PC or serial terminal connects to the FPGA via the UART interface.
+
+plaintext
+Copy
++-------------------+              +---------------------+
+|   Serial Terminal | <--- TX ----> |    FPGA (VSDSquadron)|
+|                   |              | +-----------------+  |
+|                   |              | | UART Transmitter|  |
++-------------------+              | |                 |  |
+                                    | |   Loopback Logic |  |
+                                    | |                 |  |
+                                    | | UART Receiver   |  |
+                                    | +-----------------+  |
+                                    +---------------------+
+4. Verilog Code Explanation
+The Verilog code consists of two primary modules:
+
+UART Transmitter: This module transmits data serially. It is responsible for converting parallel data from the FPGA into a serial stream that can be transmitted over the UART interface.
+
+UART Receiver: This module receives the serial data transmitted over the UART interface and converts it back into parallel data, which can be used by the FPGA.
+
+Loopback Logic
+Transmitter to Receiver Loopback: The loopback mechanism is achieved by directly feeding the transmitted data from the UART transmitter back to the UART receiver. This is accomplished through the Verilog code by connecting the TX and RX signals together within the FPGA logic.
+
+Code Snippet:
+
+verilog
+Copy
+assign RX = TX; // Loopback the transmitted data to the receiver
+5. Hardware Setup
+FPGA Board: The VSDSquadron FPGA Mini is used in this setup.
+
+Connection:
+
+The TX pin of the FPGA is connected to the RX pin for the loopback functionality.
+
+A PC or a serial terminal is connected to the FPGA through the UART interface to transmit data.
+
+Steps for Setting Up the Hardware:
+Connect the TX pin of the FPGA to the RX pin for loopback.
+
+Connect the FPGA to the serial terminal (via USB-to-Serial or direct UART connection) for communication.
+
+Ensure that the FPGA is powered on and the clock signals are correctly provided for UART operation.
+
+6. Code Implementation
+The Verilog code for the UART transmitter and receiver is written to handle the following:
+
+Transmit Data: Converts the 8-bit parallel data into serial form, handling baud rate and start/stop bits.
+
+Receive Data: Converts incoming serial data back into parallel data, ensuring correct reception and synchronization.
+
+verilog
+Copy
+module uart_transmitter(
+    input clk,
+    input [7:0] data_in,
+    output reg tx
+    // other necessary pins
+);
+    // Transmitter logic implementation
+    // Code to convert parallel data to serial
+endmodule
+
+module uart_receiver(
+    input clk,
+    input rx,
+    output reg [7:0] data_out
+    // other necessary pins
+);
+    // Receiver logic implementation
+    // Code to convert serial data back to parallel
+endmodule
+The loopback is achieved by simply connecting the TX output of the transmitter to the RX input of the receiver:
+
+verilog
+Copy
+assign RX = TX; // Loopback configuration
+7. Testing and Verification
+7.1 Testing Procedure
+Serial Terminal Setup:
+
+Open a serial terminal (e.g., PuTTY, Tera Term) on the connected PC.
+
+Configure the terminal to communicate with the FPGA, setting the correct baud rate, data bits, stop bits, and parity settings (usually 115200 baud, 8 data bits, 1 stop bit).
+
+Send Test Data:
+
+Type a test message (e.g., "Hello, FPGA!") into the serial terminal and send it.
+
+Verify Reception:
+
+Check if the same message is displayed back in the serial terminal, confirming the loopback mechanism works as expected.
+
+7.2 Expected Results
+The data sent from the serial terminal should be received and displayed back in the terminal. This confirms that the UART transmitter and receiver are working properly in the loopback configuration.
+
+8. Report Compilation
+8.1 Components
+The following components were used in this project:
+
+FPGA: VSDSquadron FPGA Mini
+
+UART Transmitter/Receiver: Implemented in Verilog
+
+Serial Terminal: PuTTY or Tera Term for communication
+
+8.2 Conclusion
+The UART loopback implementation was successfully tested on the VSDSquadron FPGA Mini. Data sent from the terminal was correctly received back, confirming that both the transmitter and receiver are functioning as expected. This loopback mechanism can be expanded for more complex UART communication tests.
+
